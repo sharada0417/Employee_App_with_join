@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class ViewDepartment extends Department {
 
-	private int empcount;
+    private int empcount;
 
-	public ViewDepartment() {
-	}
+    public ViewDepartment() {
+    }
 
-	public ViewDepartment(int id, String name, Date established, int empcount) {
-		super(id, name, established);
-		this.empcount = empcount;
-	}
+    public ViewDepartment(int id, String name, Date established, int empcount) {
+        super(id, name, established);
+        this.empcount = empcount;
+    }
 
-	public int getEmpcount() {
-		return empcount;
-	}
+    public int getEmpcount() {
+        return empcount;
+    }
 
-	public void setEmpcount(int empcount) {
-		this.empcount = empcount;
-	}
+    public void setEmpcount(int empcount) {
+        this.empcount = empcount;
+    }
 }

@@ -28,7 +28,7 @@ public class DepartmentController {
 		return new ResponseEntity<Department>(service.getDept(id),HttpStatus.OK);
 	}
 	
-	@PostMapping
+	@PostMapping("/add")
 	public ResponseEntity<String> addDept(@RequestBody Department department) {
 		return new ResponseEntity<String>(service.addDept(department),HttpStatus.OK);
 	}

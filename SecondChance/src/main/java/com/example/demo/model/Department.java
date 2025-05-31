@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,57 +12,58 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Department {
-	@Id
-	@Column(name = "dept_id")
-	private int id;
-	@Column(nullable = false)
-	private String name;
-	private Date established;
-	@JsonIgnore
-	@OneToMany(mappedBy = "department")
-	private List<Employee>employees;
-	
-	
-	public Department(int id, String name, Date established) {
-		this.id = id;
-		this.name = name;
-		this.established = established;
-	}
 
-	public Department() {
-		
-	}
+    @Id
+    @Column(name = "dept_id")
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    @Column(nullable = false)
+    private String name;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private Date established;
 
-	public String getName() {
-		return name;
-	}
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Department() {
+    }
 
-	public Date getEstablished() {
-		return established;
-	}
+    public Department(int id, String name, Date established) {
+        this.id = id;
+        this.name = name;
+        this.established = established;
+    }
 
-	public void setEstablished(Date established) {
-		this.established = established;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public List<Employee> getEmployees() {
-		return employees;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setEmployees(List<Employee> employees) {
-		this.employees = employees;
-	}
-	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getEstablished() {
+        return established;
+    }
+
+    public void setEstablished(Date established) {
+        this.established = established;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 }
