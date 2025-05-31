@@ -8,46 +8,65 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Department;
+import com.example.demo.model.ViewDepartment;
 import com.example.demo.repo.DepartmentRepo;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class DepartmentService {
+	@Autowired
+	private DepartmentRepo repo;
 
-    @Autowired
-    private DepartmentRepo repo;
+	public List<Department> getDepts() {
+		return repo.findAll();
+	}
 
-    public List<Department> getDepts() {
-        return repo.findAll();
-    }
+	public Department getDept(int id) {
+		if (repo.findById(id).isEmpty()) {
+			throw new EntityNotFoundException("Department Not Found");
+		}
+		return repo.findById(id).get();
+	}
 
-    public Department getDept(int id) {
-        return repo.findById(id).orElseThrow(() ->
-            new EntityNotFoundException("Department with ID " + id + " not found"));
-    }
+	public String addDept(Department department) {
+		// before adding a department make sure that the department id is unique
+		if (repo.findById(department.getId()).isPresent()) {
+			throw new DuplicateKeyException("The department id is already available");
+		}
+		repo.save(department);
+		return "New department added";
+	}
+	// update
 
-    public String addDept(Department department) {
-        if (repo.findById(department.getId()).isPresent()) {
-            throw new DuplicateKeyException("Department ID already exists");
-        }
-        repo.save(department);
-        return "New department added";
-    }
+	public List<String> getDepartmentNames() {
+		if (repo.getDeptNames().isEmpty()) {
+			throw new EntityNotFoundException("Department Not Found");
+		}
+		return repo.getDeptNames();
+	}
 
-    public String updateDept(Department department) {
-        if (!repo.existsById(department.getId())) {
-            throw new EntityNotFoundException("Department with ID " + department.getId() + " not found");
-        }
-        repo.save(department);
-        return "Department updated successfully";
-    }
+	public List<Department> searchDepartmentByName(String name) {
+		if (repo.searchName(name).isEmpty()) {
+			throw new EntityNotFoundException("Department Not Found");
+		}
+		return repo.searchName(name);
+	}
 
-    public String deleteDept(int id) {
-        if (!repo.existsById(id)) {
-            throw new EntityNotFoundException("Department with ID " + id + " not found");
-        }
-        repo.deleteById(id);
-        return "Department deleted successfully";
-    }
+	public int getEmpCount(int id) {
+		if (repo.findById(id).isEmpty()) {
+			throw new EntityNotFoundException("Department Not Found");
+		}
+		return repo.numberofEmp(id);
+	}
+
+	public ViewDepartment getEmpCountView(int id) {
+		if (repo.findById(id).isEmpty()) {
+			throw new EntityNotFoundException("Department Not Found");
+		}
+		Department department = repo.findById(id).get();
+		ViewDepartment viewDepartment = new ViewDepartment(department.getId(), department.getName(),
+				department.getEstablished(), getEmpCount(id));
+		return viewDepartment;
+	}
 }
